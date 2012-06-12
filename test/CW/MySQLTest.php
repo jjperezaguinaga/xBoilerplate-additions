@@ -144,6 +144,19 @@ class CW_SQLTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('lastname', $fred, 'All-column select should contain column lastname');
 
     }
+
+    /**
+     * Tests the most simple select statement: SELECT * FROM people
+     */
+    public function testSimplestSelectRow() {
+        // Simple SELECT firstname, lastname FROM people
+        $fred = CW_SQL::getInstance()->selectRow(array('id','firstname', 'lastname'), 'people', array('firstname' => 'fred'));    
+        $this->assertInstanceOf('stdClass', $fred, 'Rows should be objects');
+        $this->assertObjectHasAttribute('firstname', $fred, 'Row should have property firstname');
+        $this->assertEquals($this->fred['firstname'], $fred->firstname, 'First name is incorrect');
+        $this->assertObjectHasAttribute('lastname', $fred, 'All-column select should contain column lastname');
+
+    }
     /**
      * Tests for field and value selects that contain DB keywords such as
      * DATABASE
